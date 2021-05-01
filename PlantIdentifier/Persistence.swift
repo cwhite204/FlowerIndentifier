@@ -9,13 +9,24 @@ import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
+    
+    static let previewFlower: Flower = {
+        let result = PersistenceController(inMemory: true)
+        let viewContext = result.container.viewContext
+       
+        let item = Flower(context: viewContext)
+        item.name = "Rose"
+        item.desc = "A red flower that definitely looks like a flower and has spikes on it."
+        
+        return item 
+    }()
 
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+        for i in 0..<10 {
+            let newItem = Flower(context: viewContext)
+            newItem.name = "Flower name \(i)"
         }
         do {
             try viewContext.save()
