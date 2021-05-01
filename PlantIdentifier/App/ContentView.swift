@@ -19,14 +19,24 @@ struct ContentView: View {
     private var flowers: FetchedResults<Flower>
     
     @State private var isShowingSettings: Bool = false
+    @State private var showCaptureImageView: Bool = false
+    @State private var image: Image? = nil
 
     // MARK: - BODY
     var body: some View {
         NavigationView {
             List {
+                if let img = image {
+                    img
+                        .resizable()
+                        .frame(width: 250, height: 200, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                }
+             
                 HStack {
                     Spacer()
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Button(action: {
+                        self.showCaptureImageView.toggle()
+                    }, label: {
                         HStack {
                             Text("Scan a flower")
                                 .font(.callout)
@@ -55,6 +65,9 @@ struct ContentView: View {
             .sheet(isPresented: $isShowingSettings) {
                 SettingsView()
             }
+            .fullScreenCover(isPresented: self.$showCaptureImageView, content: {
+                CaptureImageView(isShown: $showCaptureImageView, image: $image)
+            })
         } //: NAVIGATION
     }
 
