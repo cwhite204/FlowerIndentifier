@@ -20,18 +20,12 @@ struct ContentView: View {
     
     @State private var isShowingSettings: Bool = false
     @State private var showCaptureImageView: Bool = false
-    @State private var image: Image? = nil
+    @State private var image: UIImage? = nil
 
     // MARK: - BODY
     var body: some View {
         NavigationView {
             List {
-                if let img = image {
-                    img
-                        .resizable()
-                        .frame(width: 250, height: 200, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                }
-             
                 HStack {
                     Spacer()
                     Button(action: {
@@ -75,6 +69,8 @@ struct ContentView: View {
         withAnimation {
             let newItem = Flower(context: viewContext)
             newItem.name = "Newly added name"
+            newItem.desc = "This is a description for the item"
+            newItem.image = image?.jpegData(compressionQuality: 1.0)
 
             do {
                 try viewContext.save()
