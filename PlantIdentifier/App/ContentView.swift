@@ -20,7 +20,13 @@ struct ContentView: View {
     
     @State private var isShowingSettings: Bool = false
     @State private var showCaptureImageView: Bool = false
-    @State private var image: UIImage? = nil
+    private var image: UIImage? = nil {
+        didSet {
+            if let newImage = image {
+                addItem(newImage)
+            }
+        }
+    }
 
     // MARK: - BODY
     var body: some View {
@@ -60,17 +66,17 @@ struct ContentView: View {
                 SettingsView()
             }
             .fullScreenCover(isPresented: self.$showCaptureImageView, content: {
-                CaptureImageView(isShown: $showCaptureImageView, image: $image)
+                CaptureImageView(isShown: $showCaptureImageView, image: image)
             })
         } //: NAVIGATION
     }
 
-    private func addItem() {
+    private func addItem(_ image: UIImage) {
         withAnimation {
             let newItem = Flower(context: viewContext)
             newItem.name = "Newly added name"
             newItem.desc = "This is a description for the item"
-            newItem.image = image?.jpegData(compressionQuality: 1.0)
+            newItem.image = image.jpegData(compressionQuality: 1.0)
 
             do {
                 try viewContext.save()

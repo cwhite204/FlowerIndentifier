@@ -11,10 +11,10 @@ struct CaptureImageView {
     
     /// MARK: - Properties
     @Binding var isShown: Bool
-    @Binding var image: UIImage?
+    var image: UIImage?
     
     func makeCoordinator() -> Coordinator {
-      return Coordinator(isShown: $isShown, image: $image)
+      return Coordinator(isShown: $isShown, image: image)
     }
 }
 

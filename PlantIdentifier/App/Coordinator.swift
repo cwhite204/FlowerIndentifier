@@ -10,11 +10,11 @@ import SwiftUI
 class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
   @Binding var isCoordinatorShown: Bool
-  @Binding var imageInCoordinator: UIImage?
+  var imageInCoordinator: UIImage?
     
-  init(isShown: Binding<Bool>, image: Binding<UIImage?>) {
+  init(isShown: Binding<Bool>, image: UIImage?) {
     _isCoordinatorShown = isShown
-    _imageInCoordinator = image
+    imageInCoordinator = image
   }
     
   func imagePickerController(_ picker: UIImagePickerController,
